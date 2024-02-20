@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+</head>
+<body style="background-color: rgb(176, 235, 243);">
+
+    <form id="services">
+
+        <label for="username">Enter Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="ProjectName">Enter Project Name: </label>
+        <input type="text" id="ProjectName" name="ProjectName" required><br>
+
+        <label for="ProjectType">Select Project Type: </label>
+        <select name="ProjectType">
+            <option value="Frontend">Frontend</option>
+            <option value="Microservices">Microservices</option>
+            <option value="Backend services">Backend services</option>
+        </select><br>
+
+        <label for="cloudenablers">Select Cloud Enablers: </label>
+        <select name="cloudenablers">
+            <option value="Frontend">AWS (Amazon Web Services)</option>
+            <option value="Microservices">GCP (Google Cloud Platform)</option>
+            <option value="Backend services">Microsoft Azure</option>
+        </select><br>
+
+        <label for="service">Select services: </label>
+        <select name="service" id="serviceSelect" onchange="updateServiceContent()">
+            <option value="ec2" class="Frontend AWS">EC2 (Elastic Compute Cloud)</option>
+            <option value="S3" class="Frontend AWS">(S3) Simple Storage Service</option>
+        </select><br>
+
+    </form>
+
+    <!-- Iframe to display content from index1.html -->
+    <iframe id="iframeContent" style="width: 100%; height: 500px; border: none;"></iframe>
+
+    <script>
+        function updateServiceContent() {
+            var selectedService = document.getElementById("serviceSelect").value;
+
+            // Set iframe source based on the selected service
+            if (selectedService === 'ec2') {
+                document.getElementById('iframeContent').src = 'ec2/ec2index.html';
+            } else if (selectedService === 'S3') {
+                document.getElementById('iframeContent').src = 's3/s3index.html';
+            }
+        }
+    </script>
+
+    <!-- Add this script section at the end of your index.html file -->
+
+    <script>
+        // Use `concurrently` to run both servers
+        const { exec } = require('child_process');
+        const startServersCommand = 'node startAllServers.js';
+
+        exec(startServersCommand, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error running startAllServers.js: ${error}`);
+            }
+        });
+    </script>
+</body>
+</html>

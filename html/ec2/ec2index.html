@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>EC2 Instance Creation Form</title>
+</head>
+<body>
+<form id="ec2form">
+    <label for="region">Enter region:</label>
+    <input type="text" id="region" name="region" required><br>
+
+    <label for="secret_key">Enter Secret access key:</label>
+    <input type="text" id="secret_key" name="secret_key" required><br>
+
+    <label for="access_key">Enter access key:</label>
+    <input type="text" id="access_key" name="access_key" required><br>
+
+    <label for="ami">Enter AMI ID:</label>
+    <input type="text" id="ami" name="ami" required><br>
+
+    <label for="instancetype">Enter instance type:</label>
+    <input type="text" id="instancetype" name="instancetype" required><br>
+
+    <button type="button" onclick="submitForm()">Create EC2 Instance</button>
+</form>
+
+<script>
+    function submitForm() {
+        var formData = {
+            region: document.getElementById('region').value,
+            secret_key: document.getElementById('secret_key').value,
+            access_key: document.getElementById('access_key').value,
+            ami: document.getElementById('ami').value,
+            instancetype: document.getElementById('instancetype').value
+        };
+
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/launch-ec2', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                // Handle the response from the server (if needed)
+                console.log(xhr.responseText);
+            }
+        };
+
+        xhr.send(JSON.stringify(formData));
+    }
+</script>
+</body>
+</html>

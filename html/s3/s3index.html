@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC2 Instance Creation Form</title>
+</head>
+<body>
+    <form id="ec2form">
+        <label for="region">Enter region:</label>
+        <input type="text" id="region" name="region" required><br>
+
+        <label for="access_key">Enter access key:</label>
+        <input type="text" id="access_key" name="access_key" required><br>
+
+        <label for="secret_key">Enter Secret access key:</label>
+        <input type="text" id="secret_key" name="secret_key" required><br>
+
+
+
+        <label for="bucketname">Enter the bucket name:</label>
+        <input type="text" id="bucketname" name="bucketname" required><br>
+
+        
+
+        <button type="button" onclick="submitForm()">Create S3 bucket</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            var formData = {
+                region: document.getElementById('region').value,
+                secret_key: document.getElementById('secret_key').value,
+                access_key: document.getElementById('access_key').value,
+                bucketname: document.getElementById('bucketname').value
+                
+            };
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/launch-ec2', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send(JSON.stringify(formData));
+        }
+    </script>
+</body>
+</html>
